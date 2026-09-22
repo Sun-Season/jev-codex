@@ -1,6 +1,6 @@
 ---
 name: jev-codex
-description: "将范围明确的连续浏览器导航、长工具输出取舍、搜索意图与结果筛选、候选方案比较、监督反驳和证据复核交给 TypeSafe Jev，Codex 负责规划、输入、复杂判断和验收。适用于多步网页操作、上下文过长、批量搜索筛选，或用户要求 Codex 与 Jev 分工协作。"
+description: "将范围明确的连续浏览器导航、辅助上下文压缩与长工具输出取舍、搜索意图与结果筛选、候选方案比较、监督反驳和证据复核交给 TypeSafe Jev，Codex 负责规划、输入、复杂判断和验收。适用于多步网页操作、上下文过长、批量搜索筛选，或用户要求 Codex 与 Jev 分工协作。"
 ---
 
 # Jev × Codex
@@ -12,12 +12,12 @@ Use Jev as a bounded decision worker. Codex sets goals, supplies observations an
 | Mode | Delegate | Return to Codex |
 |---|---|---|
 | `browser` | Allowlisted clicks, navigation, site tabs, scrolling and observed browser-tab switching | Input/login, uploads, consequential actions, complex decisions, stale/uncertain state, screenshot acceptance |
-| `context` | Keep/compress/archive decisions over original tool-output spans | Ambiguous or protected material; synthesis beyond verbatim excerpts |
+| `context` | Assist compact: plan retention/merging, audit draft coverage and fidelity; legacy output filtering | Write and verify the continuation summary, preserve original references |
 | `search` | Select supplied query interpretations/source strategies; score supplied search results | Execute search, open sources, check dates/claims and write cited conclusions |
 | `supervisor` | Challenge and compare candidate plans, assess objections and hard constraints; accept/revise/reject/defer | Respond to objections, verify findings, revise plans and explain disagreements |
 | `review` | Check claims against evidence; recommend a bounded next step | Verify alerts, change plan/code, run exact tests and accept the outcome |
 
-For browser work read [references/browser.md](references/browser.md). For supervisor read [references/supervisor.md](references/supervisor.md). For context/search/review read [references/data-modes.md](references/data-modes.md). Read only the relevant reference; the references contain job schemas.
+For browser work read [references/browser.md](references/browser.md). For supervisor read [references/supervisor.md](references/supervisor.md). For context compact read [references/compact.md](references/compact.md). For legacy filtering/search/review read [references/data-modes.md](references/data-modes.md). Read only the relevant reference; the references contain job schemas.
 
 ## Execute
 
@@ -40,6 +40,10 @@ Data modes use one batched request. Browser mode makes bounded requests inside *
 - Before a browser burst, define a finite checkpoint and allowlist from user intent and observed controls. Prefer a directly applicable connector/API. Respect an explicitly requested browser; this adapter controls agent-browser sessions, not IAB/CUA tabs.
 - Use `review` at meaningful checkpoints or when evidence challenges a plan. Supply a concise plan, constraints, facts and checkable claims—not hidden chain-of-thought. Jev suggests corrections; Codex verifies and applies them. Avoid review loops more expensive than the task.
 
+## Context compaction assistance
+
+For long-task handoffs or explicit compact requests, run context action `plan`, write an attributed continuation draft, then run action `audit` against all original items. Read [references/compact.md](references/compact.md). Preserve goals, constraints, decisions, failed attempts, uncertainty and pending work. Resolve reported omissions/distortions before saving a continuation summary with archive paths. This helps prepare and verify compact material; it cannot trigger native compact or remove existing history.
+
 ## Plan supervision — before recommending a substantial approach
 
 When proposing multiple approaches, making a consequential design choice, or the user requests a supervisor, run `supervisor` before presenting the final recommendation. Read [references/supervisor.md](references/supervisor.md). Do not substitute `review`: it checks evidence, not comparative plan quality.
@@ -58,4 +62,4 @@ The browser worker never types or turns model text into selectors, URLs, JavaScr
 
 See [references/validation.md](references/validation.md) for tested coverage. For protocol changes use the typesafe-ai skill if available, or consult [official API reference](https://docs.typesafe.ai/api.md).
 
-Run `node --test scripts/test.mjs scripts/supervisor.test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.
+Run `node --test scripts/test.mjs scripts/supervisor.test.mjs scripts/compact.test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.

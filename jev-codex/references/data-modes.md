@@ -2,7 +2,9 @@
 
 Jobs send supplied text to TypeSafe. Use authorized task data, redact credentials and keep local originals.
 
-## Context
+## Context — legacy output filtering
+
+For task-level compact planning and summary auditing, use [compact.md](compact.md). Omitting action preserves the legacy behavior below.
 
 ```json
 {

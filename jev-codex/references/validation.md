@@ -26,3 +26,7 @@ No general reliability claim for live sites, authenticated workflows, complex ov
 ## Supervisor extension — 2026-09-22
 
 20 offline tests pass (15 existing + 5 supervisor tests), covering hard-constraint veto, unknown compliance, supported/unresolved objections, no forced winner, and invalid evidence. Two real Jev 1.13.0 requests tested private-sharing alternatives and prototype-storage tradeoffs. Public sharing was rejected; an unknown hosting service was deferred. The private plan had sound quality but did not clear the conservative confidence gate, so no plan was automatically recommended. Storage alternatives also produced no automatic recommendation. These are smoke cases, not evidence of general review accuracy or calibrated confidence. API latency was approximately 0.84s and 0.79s, excluding Codex preparation and interpretation.
+
+## Compact assistance — 2026-09-22
+
+27 offline tests pass, including mandatory-item retention, full-original coverage checks, unsupported summary detection, source/merge validation and low-confidence handoff. Three real API smoke calls exercised planning, an accurate draft, and an intentionally distorted draft. Jev marked the accurate draft covered/faithful but two coverage confidences were below .85; this prompted a distinct needs_codex_review state rather than treating low confidence as proof of error. The distorted draft falsely claimed success and publication permission; Jev flagged both omissions and distortion. These small examples do not establish general compression quality or token savings.

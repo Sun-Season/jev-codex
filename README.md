@@ -5,7 +5,7 @@
 | 模式 | 能力 |
 | --- | --- |
 | browser | 连续导航、点击、滚动和标签切换，遇到输入或不确定情况交回 Codex |
-| context | 按原文片段保留、摘录或归档工具输出，始终保存原文 |
+| context | 辅助 Codex compact：规划保留与合并，复核接续摘要的遗漏和失真；原文可追溯 |
 | search | 选择查询解释与来源策略，对已有结果排序；Codex 负责搜索和核实 |
 | supervisor | 比较候选方案、评估反对意见与硬约束；Codex 必须回应反馈并修改或解释分歧 |
 | review | 核对结论与证据，提出下一步建议；不自动修改代码或授权操作 |
@@ -25,7 +25,7 @@
 ## 检查
 
 ```bash
-node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs
+node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs jev-codex/scripts/compact.test.mjs
 ```
 
 本仓库不包含 API 密钥、本机路径配置、浏览器会话或原始测试日志。实际调用使用运行者自己的 TypeSafe 额度。
@@ -37,3 +37,9 @@ node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs
 > 用 $jev-codex 的 supervisor 比较这些方案，挑战你偏好的方案，再根据反馈给出推荐。
 
 Jev 提供结构化判断；反对意见候选与最终解释由 Codex 撰写。详见 [方案监督](jev-codex/references/supervisor.md)。
+
+## 辅助上下文压缩（compact）
+
+Codex 整理任务目标、约束、进展、决策和待办 → Jev 判断保留与合并 → Codex 撰写接续摘要 → Jev 检查遗漏与失真 → Codex 核查并保存摘要及原文引用。
+
+这不会触发或替换 Codex 内置 compact，也不能删除已有对话。原有工具输出筛选仍可使用。详见 [compact 工作流](jev-codex/references/compact.md)。

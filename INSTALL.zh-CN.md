@@ -66,10 +66,10 @@ npm install -g agent-browser@0.38.1
 离线检查（不调用 API）：
 
 ```bash
-node --test ~/.codex/skills/jev-codex/scripts/test.mjs ~/.codex/skills/jev-codex/scripts/supervisor.test.mjs
+node --test ~/.codex/skills/jev-codex/scripts/test.mjs ~/.codex/skills/jev-codex/scripts/supervisor.test.mjs ~/.codex/skills/jev-codex/scripts/compact.test.mjs
 ```
 
-任务 JSON 与脚本调用示例见 skill 内的 references/browser.md 和 references/data-modes.md、references/supervisor.md。
+任务 JSON 与脚本调用示例见 skill 内的 references/browser.md 和 references/data-modes.md、references/supervisor.md、references/compact.md。
 实际运行会使用接收者的 TypeSafe 额度；浏览器只执行明确允许的有限动作。
 
 这是工作流 skill，不是拦截所有工具的底层插件。它不能删除已进入对话的上下文，也不保证固定倍数加速。
