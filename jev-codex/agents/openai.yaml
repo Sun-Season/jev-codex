@@ -1,4 +1,4 @@
 interface:
   display_name: "Jev × Codex"
-  short_description: "Delegate bounded browser steps and evidence checks to Jev"
-  default_prompt: "Use $jev-codex to delegate bounded browser steps, filter tool output, rerank search results, and check evidence while Codex handles planning and handoffs."
+  short_description: "Challenge plans and delegate bounded decisions to Jev"
+  default_prompt: "Use $jev-codex to supervise and compare plans, challenge objections, and delegate bounded browser, context, search and evidence decisions. Respond to supervisor feedback before recommending a plan."

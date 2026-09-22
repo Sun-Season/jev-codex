@@ -7,6 +7,7 @@
 | browser | 连续导航、点击、滚动和标签切换，遇到输入或不确定情况交回 Codex |
 | context | 按原文片段保留、摘录或归档工具输出，始终保存原文 |
 | search | 选择查询解释与来源策略，对已有结果排序；Codex 负责搜索和核实 |
+| supervisor | 比较候选方案、评估反对意见与硬约束；Codex 必须回应反馈并修改或解释分歧 |
 | review | 核对结论与证据，提出下一步建议；不自动修改代码或授权操作 |
 
 ## 安装
@@ -24,9 +25,15 @@
 ## 检查
 
 ```bash
-node --test jev-codex/scripts/test.mjs
+node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs
 ```
 
 本仓库不包含 API 密钥、本机路径配置、浏览器会话或原始测试日志。实际调用使用运行者自己的 TypeSafe 额度。
 
 这是工作流 skill，不是底层工具拦截插件；不能删除已经进入对话的上下文，也不保证固定倍数加速。精确计算和最终执行校验应由代码完成。
+
+方案监督示例：
+
+> 用 $jev-codex 的 supervisor 比较这些方案，挑战你偏好的方案，再根据反馈给出推荐。
+
+Jev 提供结构化判断；反对意见候选与最终解释由 Codex 撰写。详见 [方案监督](jev-codex/references/supervisor.md)。

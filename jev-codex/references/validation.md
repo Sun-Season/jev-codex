@@ -22,3 +22,7 @@ That benchmark also found high-confidence errors in arithmetic and multi-step pa
 ## Unproven coverage
 
 No general reliability claim for live sites, authenticated workflows, complex overlays, iframe/canvas, anti-bot pages, rapid DOM races, production transactions or long-horizon planning. Prompt-injection labeling and secret detection are heuristics, not security guarantees. The script has no Codex runtime hook and cannot erase existing conversation history. Model confidence thresholds are not calibrated on a representative production dataset.
+
+## Supervisor extension — 2026-09-22
+
+20 offline tests pass (15 existing + 5 supervisor tests), covering hard-constraint veto, unknown compliance, supported/unresolved objections, no forced winner, and invalid evidence. Two real Jev 1.13.0 requests tested private-sharing alternatives and prototype-storage tradeoffs. Public sharing was rejected; an unknown hosting service was deferred. The private plan had sound quality but did not clear the conservative confidence gate, so no plan was automatically recommended. Storage alternatives also produced no automatic recommendation. These are smoke cases, not evidence of general review accuracy or calibrated confidence. API latency was approximately 0.84s and 0.79s, excluding Codex preparation and interpretation.

@@ -4,10 +4,11 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {Stop,ensure,loadKey,checkSecrets,Jev,saveExclusive,boundedNumber} from './core.mjs';
 import {contextMode,searchMode,reviewMode} from './modes.mjs';
+import {supervisorMode} from './supervisor.mjs';
 import {browserMode} from './browser.mjs';
 export async function main(args=process.argv.slice(2)){
- const mode=args.shift();if(mode==='--help'||!mode){console.log('node scripts/jev.mjs context|search|review|browser --input job.json --output result.json\nOutput, source archive and trace use private new files. No shell commands or arbitrary code from Jev are executed.');return;}
- ensure(['context','search','review','browser'].includes(mode),'unknown_mode');
+ const mode=args.shift();if(mode==='--help'||!mode){console.log('node scripts/jev.mjs context|search|review|supervisor|browser --input job.json --output result.json\nOutput, source archive and trace use private new files. No shell commands or arbitrary code from Jev are executed.');return;}
+ ensure(['context','search','review','supervisor','browser'].includes(mode),'unknown_mode');
  const options={};for(let i=0;i<args.length;i+=2){ensure(['--input','--output'].includes(args[i])&&args[i+1],'invalid_argument');options[args[i]]=args[i+1];}
  ensure(options['--input']&&options['--output'],'input_and_output_required');
  const output=path.resolve(options['--output']),archive=output+'.source.json',trace=output+'.trace.jsonl';
@@ -20,7 +21,7 @@ export async function main(args=process.argv.slice(2)){
  try{
   // Small context inputs can be retained without credentials or a remote call.
   if(!key&&!(mode==='context'&&Array.isArray(input.items)&&input.items.reduce((n,i)=>n+(i.text?.length||0),0)<(input.minChars??8000)))throw new Stop('missing_api_key');
-  result=await({context:contextMode,search:searchMode,review:reviewMode,browser:browserMode}[mode])(input,jev,{output});
+  result=await({context:contextMode,search:searchMode,review:reviewMode,supervisor:supervisorMode,browser:browserMode}[mode])(input,jev,{output});
  }catch(e){result={status:'handoff',reason:e instanceof Stop?e.code:'invalid_input_or_runtime_error',originalsPreserved:true};}
  result={...result,archive,metrics:jev.metrics()};saveExclusive(output,result);
  const brief={status:result.status,reason:result.reason,result:output,archive,metrics:result.metrics};

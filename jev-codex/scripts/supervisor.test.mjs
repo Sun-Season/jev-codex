@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {supervisorMode} from './supervisor.mjs';
+const job=()=>({goal:'Private sharing',constraints:[{id:'privacy',text:'Private only'}],plans:[{id:'a',text:'Plan A',objections:[{id:'risk',text:'Access risk',remedy:'Check access',evidenceIds:[]}]},{id:'b',text:'Plan B',objections:[{id:'risk',text:'Access risk',remedy:'Check access',evidenceIds:[]}]}]});
+const fake=(overrides={})=>({ask:async(s,q)=>Object.fromEntries(Object.keys(q).map(k=>[k,{choice:overrides[k]??(k.startsWith('constraint')?'pass':k.startsWith('objection')?'refuted':k.startsWith('quality')?'sound':'left'),confidence:k in overrides&&overrides[k]==='unknown'?.7:.99}]))});
+test('hard violation vetoes favorable quality and pairwise preference',async()=>{const r=await supervisorMode(job(),fake({constraint_a_0:'fail'}));assert.equal(r.plans[0].verdict,'reject');assert.equal(r.recommended,null);});
+test('missing hard compliance defers rather than endorses',async()=>{const r=await supervisorMode(job(),fake({constraint_a_0:'unknown'}));assert.equal(r.plans[0].verdict,'defer');assert.equal(r.recommended,null);});
+test('supported and unresolved objections require revision',async()=>{for(const v of ['supported','unresolved']){const r=await supervisorMode(job(),fake({objection_a_0:v}));assert.equal(r.plans[0].verdict,'revise');assert.equal(r.recommended,null);}});
+test('tie does not force winner; clear accepted winner can be recommended',async()=>{assert.equal((await supervisorMode(job(),fake({pair_0_1:'tie'}))).recommended,null);assert.equal((await supervisorMode(job(),fake())).recommended,'a');});
+test('unknown evidence rejects before transport',async()=>{const j=job();j.plans[0].objections[0].evidenceIds=['missing'];await assert.rejects(()=>supervisorMode(j,{ask:()=>assert.fail('must not call')}));});

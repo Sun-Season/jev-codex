@@ -1,6 +1,6 @@
 ---
 name: jev-codex
-description: "将范围明确的连续浏览器导航、长工具输出取舍、搜索意图与结果筛选、计划和证据复核交给 TypeSafe Jev，Codex 负责规划、输入、复杂判断和验收。适用于多步网页操作、上下文过长、批量搜索筛选，或用户要求 Codex 与 Jev 分工协作。"
+description: "将范围明确的连续浏览器导航、长工具输出取舍、搜索意图与结果筛选、候选方案比较、监督反驳和证据复核交给 TypeSafe Jev，Codex 负责规划、输入、复杂判断和验收。适用于多步网页操作、上下文过长、批量搜索筛选，或用户要求 Codex 与 Jev 分工协作。"
 ---
 
 # Jev × Codex
@@ -14,9 +14,10 @@ Use Jev as a bounded decision worker. Codex sets goals, supplies observations an
 | `browser` | Allowlisted clicks, navigation, site tabs, scrolling and observed browser-tab switching | Input/login, uploads, consequential actions, complex decisions, stale/uncertain state, screenshot acceptance |
 | `context` | Keep/compress/archive decisions over original tool-output spans | Ambiguous or protected material; synthesis beyond verbatim excerpts |
 | `search` | Select supplied query interpretations/source strategies; score supplied search results | Execute search, open sources, check dates/claims and write cited conclusions |
+| `supervisor` | Challenge and compare candidate plans, assess objections and hard constraints; accept/revise/reject/defer | Respond to objections, verify findings, revise plans and explain disagreements |
 | `review` | Check claims against evidence; recommend a bounded next step | Verify alerts, change plan/code, run exact tests and accept the outcome |
 
-For browser work read [references/browser.md](references/browser.md). For other modes read [references/data-modes.md](references/data-modes.md). Read only the relevant reference; both contain job schemas.
+For browser work read [references/browser.md](references/browser.md). For supervisor read [references/supervisor.md](references/supervisor.md). For context/search/review read [references/data-modes.md](references/data-modes.md). Read only the relevant reference; the references contain job schemas.
 
 ## Execute
 
@@ -39,6 +40,14 @@ Data modes use one batched request. Browser mode makes bounded requests inside *
 - Before a browser burst, define a finite checkpoint and allowlist from user intent and observed controls. Prefer a directly applicable connector/API. Respect an explicitly requested browser; this adapter controls agent-browser sessions, not IAB/CUA tabs.
 - Use `review` at meaningful checkpoints or when evidence challenges a plan. Supply a concise plan, constraints, facts and checkable claims—not hidden chain-of-thought. Jev suggests corrections; Codex verifies and applies them. Avoid review loops more expensive than the task.
 
+## Plan supervision — before recommending a substantial approach
+
+When proposing multiple approaches, making a consequential design choice, or the user requests a supervisor, run `supervisor` before presenting the final recommendation. Read [references/supervisor.md](references/supervisor.md). Do not substitute `review`: it checks evidence, not comparative plan quality.
+
+Codex supplies the goal, actual user constraints, 2–4 meaningfully different plans when alternatives exist, and the strongest plausible objections to EACH plan (including its preferred one). Include a simpler/status-quo alternative when relevant. Do not manufacture alternatives for a trivial task. Describe concise rationale and evidence, not hidden chain-of-thought. Jev independently assesses compliance, quality, objections and pairwise preference in one batch.
+
+After the result, Codex must answer each supported or unresolved material objection: fix it, verify it, or explain with evidence why it is rejected. Present the chosen plan, Jev’s strongest disagreement, and the resulting change or unresolved tradeoff. Do not silently ignore negative feedback or treat confidence as proof. No forced winner, aggregate score, or endless review: normally one pass; at most one follow-up after a substantive revision. On service failure disclose that supervision did not run and continue locally.
+
 ## Handoff rules
 
 Low confidence, missing evidence, invalid responses, exhausted budgets, network failure and unchanged pages return to Codex. Keep originals and continue locally instead of repeatedly retrying. Default confidence cutoffs are operational settings, not calibrated guarantees. Unused speculative answers cannot authorize actions.
@@ -47,6 +56,6 @@ The browser worker never types or turns model text into selectors, URLs, JavaScr
 
 ## Validation
 
-See [references/validation.md](references/validation.md) for tested coverage. For protocol changes use the typesafe-ai skill if available, or consult the [official API reference](https://docs.typesafe.ai/api.md).
+See [references/validation.md](references/validation.md) for tested coverage. For protocol changes use the typesafe-ai skill if available, or consult [official API reference](https://docs.typesafe.ai/api.md).
 
-Run `node --test scripts/test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.
+Run `node --test scripts/test.mjs scripts/supervisor.test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.
