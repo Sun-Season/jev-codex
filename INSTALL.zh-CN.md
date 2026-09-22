@@ -74,7 +74,8 @@ node --test ~/.codex/skills/jev-codex/scripts/test.mjs ~/.codex/skills/jev-codex
 
 这是工作流 skill，不是拦截所有工具的底层插件。它不能删除已进入对话的上下文，也不保证固定倍数加速。
 
-## 如果以后放到 GitHub
+## GitHub 下载与分享
 
-可直接上传本包内的 jev-codex 文件夹和本安装说明；不要上传 local-config.json、.env 文件或真实日志。
-仓库为私有；只有获授权的 GitHub 用户可以访问。访问者需要配置自己的 TypeSafe API Key。
+仓库已公开：[Sun-Season/jev-codex](https://github.com/Sun-Season/jev-codex)。任何人都可以直接下载、克隆或分享仓库链接，无需邀请。
+每位使用者需要配置自己的 TypeSafe API Key；公开仓库不提供共享密钥或 API 额度。
+再次打包或上传时，不要包含 local-config.json、.env 文件或真实日志。
