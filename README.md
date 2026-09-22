@@ -25,7 +25,7 @@
 ## 检查
 
 ```bash
-node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs jev-codex/scripts/compact.test.mjs
+node --test jev-codex/scripts/test.mjs jev-codex/scripts/supervisor.test.mjs jev-codex/scripts/compact.test.mjs jev-codex/scripts/compact-hook.test.mjs
 ```
 
 本仓库不包含 API 密钥、本机路径配置、浏览器会话或原始测试日志。实际调用使用运行者自己的 TypeSafe 额度。
@@ -43,3 +43,11 @@ Jev 提供结构化判断；反对意见候选与最终解释由 Codex 撰写。
 Codex 整理任务目标、约束、进展、决策和待办 → Jev 判断保留与合并 → Codex 撰写接续摘要 → Jev 检查遗漏与失真 → Codex 核查并保存摘要及原文引用。
 
 这不会触发或替换 Codex 内置 compact，也不能删除已有对话。原有工具输出筛选仍可使用。详见 [compact 工作流](jev-codex/references/compact.md)。
+
+## 可选：接入原生 compact 生命周期
+
+新增 PreCompact → PostCompact → SessionStart(compact) 处理程序：压缩前让 Jev 选择关键历史片段，原生压缩成功后自动补回有界摘录。需要另外安装并信任三个钩子；安装 skill 不会自动启用。
+
+每次压缩会将限定的、经过脱敏的用户消息及助手最终回复发送给 TypeSafe。只对明确配置的项目启用，不读取隐藏推理或原始工具数据；脱敏不是对所有秘密格式的保证。此功能侧重减少遗忘，不保证省时或省 Token。
+
+已通过 33 项离线测试、真实 Jev API 冒烟测试，以及 Codex CLI/App Server 0.153.4 的原生 compact 端到端验证：三个钩子成功执行，回填内容进入后续模型上下文。其他版本及已运行的桌面会话是否热加载配置需要另行确认。详见 [钩子配置与验证](jev-codex/references/hooks.md)。

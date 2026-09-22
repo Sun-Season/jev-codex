@@ -79,3 +79,7 @@ node --test ~/.codex/skills/jev-codex/scripts/test.mjs ~/.codex/skills/jev-codex
 仓库已公开：[Sun-Season/jev-codex](https://github.com/Sun-Season/jev-codex)。任何人都可以直接下载、克隆或分享仓库链接，无需邀请。
 每位使用者需要配置自己的 TypeSafe API Key；公开仓库不提供共享密钥或 API 额度。
 再次打包或上传时，不要包含 local-config.json、.env 文件或真实日志。
+
+## 可选 compact 钩子
+
+仅安装 skill 不会启用后台生命周期钩子。请先阅读 references/hooks.md，明确允许发送到 TypeSafe 的项目范围，再配置并在 Codex /hooks 审查信任三个钩子。不要分享 hook-config.json 或运行时缓存。

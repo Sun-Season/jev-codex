@@ -4,3 +4,6 @@ local-config.json
 *.trace.jsonl
 node_modules/
 .DS_Store
+
+hook-config.json
+jev-compact-state/

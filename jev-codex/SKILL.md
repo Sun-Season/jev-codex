@@ -40,6 +40,10 @@ Data modes use one batched request. Browser mode makes bounded requests inside *
 - Before a browser burst, define a finite checkpoint and allowlist from user intent and observed controls. Prefer a directly applicable connector/API. Respect an explicitly requested browser; this adapter controls agent-browser sessions, not IAB/CUA tabs.
 - Use `review` at meaningful checkpoints or when evidence challenges a plan. Supply a concise plan, constraints, facts and checkable claims—not hidden chain-of-thought. Jev suggests corrections; Codex verifies and applies them. Avoid review loops more expensive than the task.
 
+## Native compact hooks (optional)
+
+When the user requests automatic preservation across real compaction, use [references/hooks.md](references/hooks.md). The optional PreCompact/PostCompact/SessionStart integration saves bounded Jev-selected historical excerpts and restores them after native compaction. It needs installed, trusted hooks; the skill alone does not register them. Do not run the manual plan/audit workflow on every turn. Never claim native integration verified from synthetic events alone.
+
 ## Context compaction assistance
 
 For long-task handoffs or explicit compact requests, run context action `plan`, write an attributed continuation draft, then run action `audit` against all original items. Read [references/compact.md](references/compact.md). Preserve goals, constraints, decisions, failed attempts, uncertainty and pending work. Resolve reported omissions/distortions before saving a continuation summary with archive paths. This helps prepare and verify compact material; it cannot trigger native compact or remove existing history.
@@ -62,4 +66,4 @@ The browser worker never types or turns model text into selectors, URLs, JavaScr
 
 See [references/validation.md](references/validation.md) for tested coverage. For protocol changes use the typesafe-ai skill if available, or consult [official API reference](https://docs.typesafe.ai/api.md).
 
-Run `node --test scripts/test.mjs scripts/supervisor.test.mjs scripts/compact.test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.
+Run `node --test scripts/test.mjs scripts/supervisor.test.mjs scripts/compact.test.mjs scripts/compact-hook.test.mjs` and the skill-creator validator after changes. Report speed/usage savings only when measured. Character reduction is not measured Codex token savings. This is a workflow helper, not a native Codex runtime hook.

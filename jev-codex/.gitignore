@@ -3,3 +3,6 @@ local-config.json
 *.source.json
 *.trace.jsonl
 node_modules/
+
+hook-config.json
+jev-compact-state/

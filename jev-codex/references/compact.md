@@ -1,5 +1,7 @@
 # Assist Codex compact
 
+For automatic preservation around real native compaction, use the optional [hooks integration](hooks.md). The workflow below is manual preparation/auditing only.
+
 Use context action `plan` then `audit` when preparing a continuation summary for a long task or an explicit compact request. This is a file-based workflow, not a host compaction hook. It cannot see unsupplied history, invoke or replace native compact, or erase messages already in context. Skip extra API work for tiny tasks unless explicitly requested.
 
 ## 1. Prepare original material and ask Jev for a plan
